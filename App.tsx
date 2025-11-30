@@ -1,6 +1,7 @@
 import React from 'react';
 import { AtcgVisualizer } from './components/AtcgVisualizer';
 import { CodonSequencer } from './components/CodonSequencer';
+import { ChemicalBondsVisualizer } from './components/ChemicalBondsVisualizer';
 import { HoneycombPattern, LittleBee } from './components/Illustrations';
 import { LEARNING_PATHS } from './constants';
 import { Hexagon, BookOpen, User, Users, MoveRight, Leaf } from 'lucide-react';
@@ -20,8 +21,8 @@ const App: React.FC = () => {
             <div className="hidden md:flex space-x-8 text-sm font-medium text-slate-600">
               <a href="#philosophy" className="hover:text-hive-amber transition-colors">Philosophy</a>
               <a href="#atcg" className="hover:text-hive-amber transition-colors">The ATCG Code</a>
+              <a href="#chemistry" className="hover:text-hive-amber transition-colors">Chemistry</a>
               <a href="#patterns" className="hover:text-hive-amber transition-colors">Sacred Patterns</a>
-              <a href="#learning" className="hover:text-hive-amber transition-colors">Start Learning</a>
             </div>
             <a href="https://github.com/topics/hexagonal-architecture" target="_blank" rel="noreferrer" className="bg-slate-900 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-slate-800 transition-colors">
               Get the SDK
@@ -122,10 +123,31 @@ const App: React.FC = () => {
           <div className="text-center mb-16">
             <span className="text-hive-amber font-bold tracking-widest uppercase text-sm">The Periodic Table of Software</span>
             <h2 className="text-4xl md:text-5xl serif font-bold text-slate-900 mt-2">The Four Fundamental Primitives</h2>
-            <p className="text-slate-600 mt-4 max-w-2xl mx-auto">Explore the building blocks of the Hive. Click a component to reveal its biological and technical significance.</p>
+            <div className="max-w-3xl mx-auto mt-6">
+               <p className="text-xl text-slate-800 font-serif italic mb-4">
+                 "Aggregate, Transformation, Connector, Genesis Event"
+               </p>
+               <p className="text-slate-600 leading-relaxed">
+                  These four elements—<strong className="text-red-600">A</strong>ggregate, <strong className="text-blue-600">T</strong>ransformation, <strong className="text-amber-600">C</strong>onnector, and <strong className="text-purple-600">G</strong>enesis Event—form the <strong>ATCG</strong> code. Just like DNA, they combine to create complex, living software systems.
+               </p>
+            </div>
           </div>
           
           <AtcgVisualizer />
+        </div>
+      </section>
+
+      {/* Chemical Architecture Section */}
+      <section id="chemistry" className="py-24 bg-white border-y border-stone-200">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-16">
+             <span className="text-blue-500 font-bold tracking-widest uppercase text-sm">Molecular Design</span>
+             <h2 className="text-4xl serif font-bold text-slate-900 mt-2">The Chemical Bonds of Logic</h2>
+             <p className="max-w-2xl mx-auto mt-4 text-slate-600">
+               Just as Carbon, Hydrogen, Oxygen, and Nitrogen combine to form the molecules of life, our software primitives combine to form the molecules of logic.
+             </p>
+          </div>
+          <ChemicalBondsVisualizer />
         </div>
       </section>
 
