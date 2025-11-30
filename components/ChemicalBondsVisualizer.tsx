@@ -181,7 +181,7 @@ export const ChemicalBondsVisualizer: React.FC = () => {
       name: 'Transformation',
       role: 'Single Bond',
       chemistry: 'Hydrogen',
-      desc: 'Transformations (Hydrogen) form simple, single bonds with the Aggregate. They modify state locally without external dependencies.',
+      desc: 'Transformations (Hydrogen) are Pure Functions. They transform input data into output without side effects or state modification.',
       color: 'bg-gradient-to-br from-blue-500 to-blue-600 border-blue-200',
       icon: <FlaskConical size={32} />,
       position: positions.H,
