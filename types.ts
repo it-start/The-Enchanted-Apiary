@@ -39,3 +39,21 @@ export interface LearningPath {
   focus: string;
   steps: string[];
 }
+
+export interface LifecycleStage {
+  id: string;
+  name: string;
+  metaphor: string;
+  techConfig: string;
+  description: string;
+  iconName: string;
+}
+
+export interface ArchLayer {
+  id: string;
+  name: string;
+  role: string;
+  analogy: string;
+  components: string[];
+  color: string;
+}

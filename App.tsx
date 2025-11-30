@@ -3,9 +3,11 @@ import { AtcgVisualizer } from './components/AtcgVisualizer';
 import { CodonSequencer } from './components/CodonSequencer';
 import { ChemicalBondsVisualizer } from './components/ChemicalBondsVisualizer';
 import { DnaMapping } from './components/DnaMapping';
+import { HoneycombArchitecture } from './components/HoneycombArchitecture';
+import { LifecycleVisualizer } from './components/LifecycleVisualizer';
 import { HoneycombPattern, LittleBee, HoneyPot } from './components/Illustrations';
 import { LEARNING_PATHS } from './constants';
-import { Hexagon, BookOpen, User, Users, MoveRight, Leaf } from 'lucide-react';
+import { Hexagon, BookOpen, User, Users, MoveRight, Leaf, Sprout } from 'lucide-react';
 
 const App: React.FC = () => {
   return (
@@ -23,7 +25,7 @@ const App: React.FC = () => {
               <a href="#philosophy" className="hover:text-hive-amber transition-colors">Philosophy</a>
               <a href="#atcg" className="hover:text-hive-amber transition-colors">The ATCG Code</a>
               <a href="#chemistry" className="hover:text-hive-amber transition-colors">Chemistry</a>
-              <a href="#patterns" className="hover:text-hive-amber transition-colors">Sacred Patterns</a>
+              <a href="#dynamics" className="hover:text-hive-amber transition-colors">System Dynamics</a>
             </div>
             <a href="https://github.com/topics/hexagonal-architecture" target="_blank" rel="noreferrer" className="bg-slate-900 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-slate-800 transition-colors">
               Get the SDK
@@ -161,9 +163,33 @@ const App: React.FC = () => {
         </div>
       </section>
 
+      {/* System Dynamics Section (NEW) */}
+      <section id="dynamics" className="py-24 bg-stone-100">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-16">
+             <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-green-100 text-green-800 text-xs font-bold uppercase mb-4">
+                <Sprout size={14} /> Living Systems
+             </div>
+             <h2 className="text-4xl serif font-bold text-slate-900">System Dynamics & Evolution</h2>
+             <p className="max-w-2xl mx-auto mt-4 text-slate-600">
+               A Hive is not static structure; it is a living process. Understand the protected geometry of the core and the lifecycle of every component.
+             </p>
+          </div>
+          
+          <div className="grid grid-cols-1 gap-16">
+             <HoneycombArchitecture />
+             <LifecycleVisualizer />
+          </div>
+        </div>
+      </section>
+
       {/* Sacred Patterns Section */}
       <section id="patterns" className="py-24 bg-slate-900 text-white">
         <div className="max-w-7xl mx-auto px-4">
+           <div className="text-center mb-12">
+              <h2 className="text-4xl serif font-bold text-hive-gold mb-4">The Sacred Sequences</h2>
+              <p className="text-slate-400">Watch the flow of information as "Sacred Codons" execute logic.</p>
+           </div>
            <CodonSequencer />
         </div>
       </section>

@@ -1,4 +1,4 @@
-import { CodonPattern, ElementType, HiveElement, LearningPath } from "./types";
+import { CodonPattern, ElementType, HiveElement, LearningPath, LifecycleStage, ArchLayer } from "./types";
 
 export const HIVE_ELEMENTS: HiveElement[] = [
   {
@@ -112,5 +112,67 @@ export const LEARNING_PATHS: LearningPath[] = [
     duration: "45 min",
     focus: "Scaling & Adoption",
     steps: ["Core Philosophy", "Colony Building", "Success Metrics"]
+  }
+];
+
+export const LIFECYCLE_STAGES: LifecycleStage[] = [
+  {
+    id: "egg",
+    name: "The Egg",
+    metaphor: "Genesis Init",
+    techConfig: "genesis init",
+    description: "The potential of life. A standardized project structure is laid, waiting for logic to be injected.",
+    iconName: "Egg"
+  },
+  {
+    id: "larva",
+    name: "The Larva",
+    metaphor: "Development (Hatch)",
+    techConfig: "genesis hatch",
+    description: "Rapid growth. The bare minimum code file (scaffold) is generated. It consumes requirements to grow.",
+    iconName: "Worm"
+  },
+  {
+    id: "pupa",
+    name: "The Pupa",
+    metaphor: "Testing (Cocoon)",
+    techConfig: "genesis validate",
+    description: "Metamorphosis. The code is wrapped in a protective layer of tests. It hardens and validates its structure.",
+    iconName: "Box"
+  },
+  {
+    id: "adult",
+    name: "The Adult",
+    metaphor: "Production (Emerge)",
+    techConfig: "genesis deploy",
+    description: "Flight. The component emerges with Dockerfiles and CI/CD config, ready to leave the hive and serve.",
+    iconName: "Plane"
+  }
+];
+
+export const ARCH_LAYERS: ArchLayer[] = [
+  {
+    id: "external",
+    name: "The World",
+    role: "External Systems",
+    analogy: "The Garden (Pollen Sources)",
+    components: ["UI / Web App", "Database (PostgreSQL)", "External APIs", "CLI Tools"],
+    color: "bg-stone-800 text-stone-100"
+  },
+  {
+    id: "adapters",
+    name: "Worker Bees",
+    role: "Interface Adapters",
+    analogy: "Wax Comb (Structure)",
+    components: ["REST Adapter", "gRPC Adapter", "SQL Repository", "Event Listener"],
+    color: "bg-amber-400 text-amber-950"
+  },
+  {
+    id: "domain",
+    name: "Queen Bee",
+    role: "Domain Core",
+    analogy: "Pure Honey (Value)",
+    components: ["Aggregates", "Business Policies", "Domain Services", "Value Objects"],
+    color: "bg-yellow-300 text-yellow-900"
   }
 ];
