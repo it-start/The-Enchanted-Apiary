@@ -6,11 +6,12 @@ import { DnaMapping } from './components/DnaMapping';
 import { HoneycombArchitecture } from './components/HoneycombArchitecture';
 import { LifecycleVisualizer } from './components/LifecycleVisualizer';
 import { ImmuneSystemVisualizer } from './components/ImmuneSystemVisualizer';
+import { AgentVisualizer } from './components/AgentVisualizer';
 import { Hero } from './components/sections/Hero';
 import { Philosophy } from './components/sections/Philosophy';
 import { LEARNING_PATHS, APP_METADATA } from './constants';
 import { ElementType } from './types';
-import { Hexagon, BookOpen, User, Users, Sprout, ShieldCheck } from 'lucide-react';
+import { Hexagon, BookOpen, User, Users, Sprout, ShieldCheck, Bot } from 'lucide-react';
 
 const Navbar: React.FC = () => (
   <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-stone-200">
@@ -114,6 +115,22 @@ const App: React.FC = () => {
              <HoneycombArchitecture activeElement={activeElement} />
              <LifecycleVisualizer />
           </div>
+        </div>
+      </section>
+
+      {/* Agent Section */}
+      <section id="agent" className="py-24 bg-white border-y border-stone-200">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-12">
+             <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-purple-100 text-purple-800 text-xs font-bold uppercase mb-4">
+                <Bot size={14} /> Hive Minds
+             </div>
+             <h2 className="text-4xl serif font-bold text-slate-900">Autonomous Agents</h2>
+             <p className="max-w-2xl mx-auto mt-4 text-slate-600">
+               The "Queen Bee" (Agent) can autonomously call tools (Worker Bees), analyze the results, and call herself again to solve complex problems.
+             </p>
+          </div>
+          <AgentVisualizer />
         </div>
       </section>
 

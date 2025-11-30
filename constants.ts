@@ -1,4 +1,4 @@
-import { CodonPattern, ElementType, HiveElement, LearningPath, LifecycleStage, ArchLayer, GitHubIssue } from "./types";
+import { CodonPattern, ElementType, HiveElement, LearningPath, LifecycleStage, ArchLayer, GitHubIssue, AgentTool } from "./types";
 
 export const APP_METADATA = {
   title: "The Enchanted Apiary",
@@ -232,5 +232,23 @@ export const MOCK_ISSUES: GitHubIssue[] = [
     html_url: "#",
     labels: [{ name: "bug", color: "d73a4a" }],
     created_at: new Date(Date.now() - 172800000).toISOString()
+  }
+];
+
+export const AGENT_TOOLS: AgentTool[] = [
+  {
+    name: "scan_sector(sector_id)",
+    description: "Returns the current threat level and honey stores for a specific sector.",
+    parameters: "{ sector_id: string }"
+  },
+  {
+    name: "deploy_defense(sector_id, units)",
+    description: "Deploys stinger drones to a sector. Returns deployment status.",
+    parameters: "{ sector_id: string, units: number }"
+  },
+  {
+    name: "harvest_honey(sector_id)",
+    description: "Extracts honey resources. Only works if threat level is LOW.",
+    parameters: "{ sector_id: string }"
   }
 ];

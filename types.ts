@@ -74,3 +74,16 @@ export interface ImmuneLog {
   message: string;
   status: 'pending' | 'success' | 'error';
 }
+
+export interface AgentTool {
+  name: string;
+  description: string;
+  parameters: string;
+}
+
+export interface AgentStep {
+  id: number;
+  type: 'user' | 'thought' | 'call' | 'result' | 'final';
+  content: string;
+  toolName?: string;
+}
