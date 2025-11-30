@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Navbar } from './components/Navbar';
 import { AtcgVisualizer } from './components/AtcgVisualizer';
 import { CodonSequencer } from './components/CodonSequencer';
 import { ChemicalBondsVisualizer } from './components/ChemicalBondsVisualizer';
@@ -9,31 +10,9 @@ import { ImmuneSystemVisualizer } from './components/ImmuneSystemVisualizer';
 import { AgentVisualizer } from './components/AgentVisualizer';
 import { Hero } from './components/sections/Hero';
 import { Philosophy } from './components/sections/Philosophy';
-import { LEARNING_PATHS, APP_METADATA } from './constants';
+import { LEARNING_PATHS } from './constants';
 import { ElementType } from './types';
 import { Hexagon, BookOpen, User, Users, Sprout, ShieldCheck, Bot } from 'lucide-react';
-
-const Navbar: React.FC = () => (
-  <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-stone-200">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="flex justify-between h-16 items-center">
-        <div className="flex items-center gap-2">
-          <Hexagon className="text-hive-amber fill-hive-gold" />
-          <span className="font-serif font-bold text-xl text-slate-900">{APP_METADATA.subtitle}</span>
-        </div>
-        <div className="hidden md:flex space-x-8 text-sm font-medium text-slate-600">
-          <a href="#philosophy" className="hover:text-hive-amber transition-colors">Philosophy</a>
-          <a href="#atcg" className="hover:text-hive-amber transition-colors">The ATCG Code</a>
-          <a href="#dynamics" className="hover:text-hive-amber transition-colors">Dynamics</a>
-          <a href="#immune" className="hover:text-hive-amber transition-colors">Immune System</a>
-        </div>
-        <a href={APP_METADATA.githubUrl} target="_blank" rel="noreferrer" className="bg-slate-900 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-slate-800 transition-colors">
-          Get the SDK
-        </a>
-      </div>
-    </div>
-  </nav>
-);
 
 const Footer: React.FC = () => (
   <footer className="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
