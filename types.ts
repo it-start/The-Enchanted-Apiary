@@ -57,3 +57,20 @@ export interface ArchLayer {
   components: string[];
   color: string;
 }
+
+export interface GitHubIssue {
+  id: number;
+  number: number;
+  title: string;
+  state: string;
+  html_url: string;
+  labels: { name: string; color: string }[];
+  created_at: string;
+}
+
+export interface ImmuneLog {
+  timestamp: string;
+  stage: ElementType;
+  message: string;
+  status: 'pending' | 'success' | 'error';
+}

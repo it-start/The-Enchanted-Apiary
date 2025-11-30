@@ -1,5 +1,37 @@
 import React from 'react';
 
+interface HexBaseProps {
+  className?: string;
+  colorClass: string;
+  children: React.ReactNode;
+  active?: boolean;
+  onClick?: () => void;
+  style?: React.CSSProperties;
+}
+
+// Internal primitive for the hexagon shape
+const HexBase: React.FC<HexBaseProps> = ({ 
+  className = "", 
+  colorClass, 
+  children, 
+  active = false, 
+  onClick,
+  style
+}) => (
+  <div 
+    onClick={onClick}
+    style={style}
+    className={`relative flex items-center justify-center transition-all duration-300 ${className}`}
+  >
+    <div 
+      className={`absolute inset-0 hex-clip transition-colors duration-300 ${active ? 'bg-slate-800' : colorClass} shadow-lg`}
+    />
+    <div className={`relative z-10 ${active ? 'text-white' : 'text-slate-900'}`}>
+      {children}
+    </div>
+  </div>
+);
+
 interface HexButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
@@ -16,17 +48,16 @@ export const HexButton: React.FC<HexButtonProps> = ({
   className = ""
 }) => {
   return (
-    <div 
+    <HexBase
+      className={`w-24 h-28 cursor-pointer transform hover:scale-105 hover:bg-slate-700 ${className}`}
+      colorClass={colorClass}
+      active={active}
       onClick={onClick}
-      className={`relative w-24 h-28 flex items-center justify-center cursor-pointer transition-all duration-300 transform hover:scale-105 ${className}`}
     >
-      <div 
-        className={`absolute inset-0 hex-clip transition-colors duration-300 ${active ? 'bg-slate-800' : colorClass} hover:bg-slate-700 shadow-lg`}
-      />
-      <div className={`relative z-10 font-bold ${active ? 'text-white' : 'text-slate-900'}`}>
+      <div className="font-bold">
         {children}
       </div>
-    </div>
+    </HexBase>
   );
 };
 

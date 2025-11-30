@@ -5,126 +5,56 @@ import { ChemicalBondsVisualizer } from './components/ChemicalBondsVisualizer';
 import { DnaMapping } from './components/DnaMapping';
 import { HoneycombArchitecture } from './components/HoneycombArchitecture';
 import { LifecycleVisualizer } from './components/LifecycleVisualizer';
-import { HoneycombPattern, LittleBee, HoneyPot } from './components/Illustrations';
-import { LEARNING_PATHS } from './constants';
-import { Hexagon, BookOpen, User, Users, MoveRight, Leaf, Sprout } from 'lucide-react';
+import { ImmuneSystemVisualizer } from './components/ImmuneSystemVisualizer';
+import { Hero } from './components/sections/Hero';
+import { Philosophy } from './components/sections/Philosophy';
+import { LEARNING_PATHS, APP_METADATA } from './constants';
+import { Hexagon, BookOpen, User, Users, Sprout, ShieldCheck } from 'lucide-react';
+
+const Navbar: React.FC = () => (
+  <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-stone-200">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="flex justify-between h-16 items-center">
+        <div className="flex items-center gap-2">
+          <Hexagon className="text-hive-amber fill-hive-gold" />
+          <span className="font-serif font-bold text-xl text-slate-900">{APP_METADATA.subtitle}</span>
+        </div>
+        <div className="hidden md:flex space-x-8 text-sm font-medium text-slate-600">
+          <a href="#philosophy" className="hover:text-hive-amber transition-colors">Philosophy</a>
+          <a href="#atcg" className="hover:text-hive-amber transition-colors">The ATCG Code</a>
+          <a href="#dynamics" className="hover:text-hive-amber transition-colors">Dynamics</a>
+          <a href="#immune" className="hover:text-hive-amber transition-colors">Immune System</a>
+        </div>
+        <a href={APP_METADATA.githubUrl} target="_blank" rel="noreferrer" className="bg-slate-900 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-slate-800 transition-colors">
+          Get the SDK
+        </a>
+      </div>
+    </div>
+  </nav>
+);
+
+const Footer: React.FC = () => (
+  <footer className="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
+    <div className="max-w-7xl mx-auto px-4 text-center">
+      <Hexagon className="mx-auto text-slate-600 mb-4" />
+      <p className="serif italic text-lg mb-8">"In the end, we are all beekeepers, tending our digital hives with patience, wisdom, and love."</p>
+      <div className="flex justify-center gap-8 text-sm">
+         <a href="#" className="hover:text-hive-gold">Documentation</a>
+         <a href="#" className="hover:text-hive-gold">GitHub</a>
+         <a href="#" className="hover:text-hive-gold">Community</a>
+      </div>
+      <p className="mt-8 text-xs text-slate-600">© 2024 The Hive Architecture Project. Open Source.</p>
+    </div>
+  </footer>
+);
 
 const App: React.FC = () => {
   return (
     <div className="min-h-screen bg-stone-50 overflow-x-hidden">
       
-      {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-stone-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16 items-center">
-            <div className="flex items-center gap-2">
-              <Hexagon className="text-hive-amber fill-hive-gold" />
-              <span className="font-serif font-bold text-xl text-slate-900">The Hive Architecture</span>
-            </div>
-            <div className="hidden md:flex space-x-8 text-sm font-medium text-slate-600">
-              <a href="#philosophy" className="hover:text-hive-amber transition-colors">Philosophy</a>
-              <a href="#atcg" className="hover:text-hive-amber transition-colors">The ATCG Code</a>
-              <a href="#chemistry" className="hover:text-hive-amber transition-colors">Chemistry</a>
-              <a href="#dynamics" className="hover:text-hive-amber transition-colors">System Dynamics</a>
-            </div>
-            <a href="https://github.com/topics/hexagonal-architecture" target="_blank" rel="noreferrer" className="bg-slate-900 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-slate-800 transition-colors">
-              Get the SDK
-            </a>
-          </div>
-        </div>
-      </nav>
-
-      {/* Hero Section */}
-      <header className="relative pt-20 pb-32 lg:pt-32 lg:pb-48 overflow-hidden">
-        {/* Background Patterns */}
-        <div className="absolute inset-0 z-0 opacity-10 pointer-events-none">
-           <div className="absolute top-0 right-0 transform translate-x-1/4 -translate-y-1/4">
-             <HoneycombPattern className="w-[600px] h-[600px] text-hive-amber" />
-           </div>
-           <div className="absolute bottom-0 left-0 transform -translate-x-1/4 translate-y-1/4 rotate-90">
-             <HoneycombPattern className="w-[500px] h-[500px] text-hive-gold" />
-           </div>
-        </div>
-
-        {/* Floating Little Bee */}
-        <div className="absolute top-32 right-[15%] hidden lg:block pointer-events-none animate-float z-20">
-          <LittleBee className="w-32 h-32" />
-        </div>
-        
-        <div className="max-w-7xl mx-auto px-4 text-center relative z-10">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-hive-pollen border border-hive-honey text-hive-dark text-sm font-medium mb-8 animate-float">
-            <Leaf size={16} /> Nature-Inspired Software Design
-          </div>
-          <h1 className="text-5xl md:text-7xl font-serif font-bold text-slate-900 mb-6 leading-tight">
-            The Tale of the <br/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-hive-amber to-hive-gold">Enchanted Apiary</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-slate-600 max-w-2xl mx-auto mb-10 leading-relaxed">
-            "Just as chemistry's periodic table unlocked modern science, the Hive's table will unlock scalable, predictable software architecture."
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <a href="#atcg" className="px-8 py-4 bg-slate-900 text-white rounded-xl font-bold text-lg hover:shadow-xl hover:-translate-y-1 transition-all flex items-center justify-center gap-2">
-              Explore the Hive <MoveRight size={20} />
-            </a>
-            <a href="#learning" className="px-8 py-4 bg-white text-slate-900 border border-slate-200 rounded-xl font-bold text-lg hover:bg-stone-50 transition-all">
-              Choose Your Path
-            </a>
-          </div>
-        </div>
-      </header>
-
-      {/* Philosophy Section */}
-      <section id="philosophy" className="py-20 bg-white border-y border-stone-200">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl serif font-bold text-slate-900 mb-12">From Hexagons to Honeycombs</h2>
-          <div className="grid md:grid-cols-2 gap-12 items-center text-left">
-            <div>
-              <p className="text-lg text-slate-600 mb-6 leading-relaxed">
-                Traditional Hexagonal Architecture is powerful but abstract. The Hive Architecture grounds it in nature, providing a rich vocabulary for complex systems.
-              </p>
-              <ul className="space-y-4">
-                {[
-                  "Organic Growth over rigid planning",
-                  "Scientific Foundation based on patterns",
-                  "Ecosystem Scale from day one"
-                ].map((item, i) => (
-                  <li key={i} className="flex items-center gap-3">
-                    <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center text-green-600">✓</div>
-                    <span className="font-medium text-slate-800">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="bg-stone-100 p-8 rounded-2xl relative">
-               <div className="absolute -top-4 -right-4 bg-hive-gold text-xs font-bold px-3 py-1 rounded shadow transform rotate-3">The Metaphor</div>
-               
-               {/* Honey Pot Visual - External Data */}
-               <div className="absolute -bottom-8 -right-8 w-24 h-24 pointer-events-none drop-shadow-xl z-10 hidden md:block">
-                  <HoneyPot />
-               </div>
-
-               <div className="space-y-4 font-serif">
-                  <div className="flex justify-between border-b border-stone-200 pb-2">
-                    <span className="text-slate-500">Hexagonal</span>
-                    <span className="font-bold text-slate-900">The Hive</span>
-                  </div>
-                  <div className="flex justify-between border-b border-stone-200 pb-2">
-                    <span className="text-slate-500">Domain</span>
-                    <span className="font-bold text-hive-amber">The Queen's Chamber</span>
-                  </div>
-                  <div className="flex justify-between border-b border-stone-200 pb-2">
-                    <span className="text-slate-500">Ports & Adapters</span>
-                    <span className="font-bold text-hive-amber">Connectors & Organs</span>
-                  </div>
-                  <div className="flex justify-between pb-2">
-                    <span className="text-slate-500">Application Services</span>
-                    <span className="font-bold text-hive-amber">The Enzymes (Logic)</span>
-                  </div>
-               </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <Navbar />
+      <Hero />
+      <Philosophy />
 
       {/* ATCG Visualizer Section */}
       <section id="atcg" className="py-24 bg-stone-50">
@@ -163,7 +93,7 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* System Dynamics Section (NEW) */}
+      {/* System Dynamics Section */}
       <section id="dynamics" className="py-24 bg-stone-100">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-16">
@@ -180,6 +110,24 @@ const App: React.FC = () => {
              <HoneycombArchitecture />
              <LifecycleVisualizer />
           </div>
+        </div>
+      </section>
+
+      {/* Immune System Section */}
+      <section id="immune" className="py-24 bg-slate-800 border-y border-slate-700 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/40 via-slate-900 to-slate-900 pointer-events-none"></div>
+        <div className="max-w-7xl mx-auto px-4 relative z-10">
+          <div className="text-center mb-16">
+             <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-blue-900/50 border border-blue-500/30 text-blue-200 text-xs font-bold uppercase mb-4">
+                <ShieldCheck size={14} /> Pattern 4: G→C→A→C
+             </div>
+             <h2 className="text-4xl serif font-bold text-white mt-2">Self-Healing Architecture</h2>
+             <p className="max-w-2xl mx-auto mt-4 text-slate-300">
+               The Hive detects mutations (bugs) and deploys antibodies (fixes) automatically. 
+               Connecting to live source: <span className="font-mono text-blue-400">it-start/The-Enchanted-Apiary</span>
+             </p>
+          </div>
+          <ImmuneSystemVisualizer />
         </div>
       </section>
 
@@ -238,19 +186,7 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <Hexagon className="mx-auto text-slate-600 mb-4" />
-          <p className="serif italic text-lg mb-8">"In the end, we are all beekeepers, tending our digital hives with patience, wisdom, and love."</p>
-          <div className="flex justify-center gap-8 text-sm">
-             <a href="#" className="hover:text-hive-gold">Documentation</a>
-             <a href="#" className="hover:text-hive-gold">GitHub</a>
-             <a href="#" className="hover:text-hive-gold">Community</a>
-          </div>
-          <p className="mt-8 text-xs text-slate-600">© 2024 The Hive Architecture Project. Open Source.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

@@ -1,5 +1,33 @@
 import { CodonPattern, ElementType, HiveElement, LearningPath, LifecycleStage, ArchLayer } from "./types";
 
+export const APP_METADATA = {
+  title: "The Enchanted Apiary",
+  subtitle: "The Hive Architecture",
+  tagline: "Nature-Inspired Software Design",
+  heroQuote: "\"Just as chemistry's periodic table unlocked modern science, the Hive's table will unlock scalable, predictable software architecture.\"",
+  githubUrl: "https://github.com/topics/hexagonal-architecture",
+  repoApiUrl: "https://api.github.com/repos/it-start/The-Enchanted-Apiary"
+};
+
+export const PHILOSOPHY_CONTENT = {
+  title: "From Hexagons to Honeycombs",
+  description: "Traditional Hexagonal Architecture is powerful but abstract. The Hive Architecture grounds it in nature, providing a rich vocabulary for complex systems.",
+  points: [
+    "Organic Growth over rigid planning",
+    "Scientific Foundation based on patterns",
+    "Ecosystem Scale from day one"
+  ],
+  metaphor: {
+    title: "The Metaphor",
+    mappings: [
+      { traditional: "Hexagonal", hive: "The Hive" },
+      { traditional: "Domain", hive: "The Queen's Chamber", highlight: true },
+      { traditional: "Ports & Adapters", hive: "Connectors & Organs", highlight: true },
+      { traditional: "Application Services", hive: "The Enzymes (Logic)", highlight: true }
+    ]
+  }
+};
+
 export const HIVE_ELEMENTS: HiveElement[] = [
   {
     id: ElementType.AGGREGATE,
