@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
-import { Hexagon, Menu, X, Github, Globe } from 'lucide-react';
+import { Hexagon, Menu, X, Github } from 'lucide-react';
 import { APP_METADATA } from '../constants';
 import { useTranslation } from 'react-i18next';
+import { LanguageOrganella } from './LanguageOrganella';
 
 export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { t, i18n } = useTranslation();
-
-  const toggleLanguage = () => {
-    const newLang = i18n.language === 'en' ? 'ru' : 'en';
-    i18n.changeLanguage(newLang);
-  };
+  const { t } = useTranslation();
 
   const links = [
     { name: t('nav.philosophy'), href: '#philosophy' },
@@ -48,13 +44,10 @@ export const Navbar: React.FC = () => {
               </a>
             ))}
             
-            <button 
-              onClick={toggleLanguage}
-              className="flex items-center gap-1 px-3 py-2 rounded hover:bg-stone-100 transition-colors text-slate-700"
-            >
-              <Globe size={16} />
-              <span className="uppercase">{i18n.language}</span>
-            </button>
+            {/* The Language Organella */}
+            <div className="pl-2 border-l border-slate-200">
+              <LanguageOrganella />
+            </div>
 
             <a 
               href={APP_METADATA.githubUrl} 
@@ -69,13 +62,8 @@ export const Navbar: React.FC = () => {
 
           {/* Mobile Spiracle (Menu Toggle) */}
           <div className="flex items-center gap-4 md:hidden">
-            <button 
-              onClick={toggleLanguage}
-              className="flex items-center gap-1 px-2 py-1 rounded hover:bg-stone-100 transition-colors text-slate-700"
-            >
-              <Globe size={18} />
-              <span className="uppercase text-xs font-bold">{i18n.language}</span>
-            </button>
+            <LanguageOrganella />
+            
             <button 
               onClick={() => setIsOpen(!isOpen)}
               className="text-slate-600 hover:text-slate-900 transition-colors p-2"
