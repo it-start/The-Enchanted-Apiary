@@ -2,7 +2,8 @@ import React from 'react';
 import { ElementType } from '../types';
 import { HIVE_ELEMENTS } from '../constants';
 import { HexButton } from './HexButton';
-import { Heart, FlaskConical, Network, Zap } from 'lucide-react';
+import { Heart, FlaskConical, Network, Zap, Dna } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const iconMap: Record<string, React.FC<any>> = {
   Heart,
@@ -20,6 +21,7 @@ export const AtcgVisualizer: React.FC<AtcgVisualizerProps> = ({
   activeId = ElementType.AGGREGATE, 
   onSelect 
 }) => {
+  const { t } = useTranslation();
   const selectedElement = HIVE_ELEMENTS.find(e => e.id === activeId) || HIVE_ELEMENTS[0];
   const Icon = iconMap[selectedElement.iconName];
 
@@ -31,8 +33,6 @@ export const AtcgVisualizer: React.FC<AtcgVisualizerProps> = ({
     // Extract bg color for the button base (e.g., "bg-red-100")
     const bgClass = el.color.split(' ').find(c => c.startsWith('bg-')) || 'bg-slate-100';
     const textClass = el.color.split(' ').find(c => c.startsWith('text-')) || 'text-slate-900';
-    // Extract shadow color based on base color for hover effect
-    const shadowColor = bgClass.replace('100', '500').replace('bg-', ''); // simple heuristic
 
     return (
       <div className={className}>
@@ -44,7 +44,7 @@ export const AtcgVisualizer: React.FC<AtcgVisualizerProps> = ({
         >
           <div className={`flex flex-col items-center ${textClass}`}>
             <span className="text-3xl font-serif">{el.id}</span>
-            <span className="text-[10px] font-bold tracking-widest uppercase truncate max-w-[80px]">{el.tech.split(' ')[0]}</span>
+            <span className="text-[10px] font-bold tracking-widest uppercase truncate max-w-[80px]">{t(`elements.${el.id}.tech`).split(' ')[0]}</span>
           </div>
         </HexButton>
       </div>
@@ -82,12 +82,16 @@ export const AtcgVisualizer: React.FC<AtcgVisualizerProps> = ({
           <div className={`p-4 rounded-2xl shadow-inner transition-colors duration-500 ${selectedElement.color}`}>
             <Icon size={36} />
           </div>
-          <div>
-            <h3 className="text-4xl serif font-bold text-slate-900 transition-all duration-300">{selectedElement.name}</h3>
-            <div className="flex items-center gap-2 text-sm mt-1 font-mono text-slate-500 uppercase tracking-wide">
+          <div className="flex-1">
+            <h3 className="text-4xl serif font-bold text-slate-900 transition-all duration-300">{t(`elements.${selectedElement.id}.name`)}</h3>
+            <div className="flex flex-wrap items-center gap-3 text-sm mt-2 font-mono text-slate-500 uppercase tracking-wide">
                <span className="bg-slate-100 px-2 py-0.5 rounded">ID: {selectedElement.id}</span>
                <span className="text-slate-300">•</span>
-               <span>{selectedElement.chemistry}</span>
+               <span>{t(`elements.${selectedElement.id}.chemistry`)}</span>
+               <span className="text-slate-300">•</span>
+               <span className="flex items-center gap-1 text-slate-600 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
+                 <Dna size={12} /> {t(`elements.${selectedElement.id}.dnaBase`)}
+               </span>
             </div>
           </div>
         </div>
@@ -96,16 +100,16 @@ export const AtcgVisualizer: React.FC<AtcgVisualizerProps> = ({
           <div className="flex gap-4">
              <div className="flex-1 bg-slate-50 p-4 rounded-xl border border-slate-100">
                <h4 className="text-[10px] uppercase tracking-widest text-slate-400 font-bold mb-2">Biological Metaphor</h4>
-               <p className="text-lg italic serif text-slate-800">"{selectedElement.biology}"</p>
+               <p className="text-lg italic serif text-slate-800">"{t(`elements.${selectedElement.id}.biology`)}"</p>
              </div>
              <div className="flex-1 bg-slate-50 p-4 rounded-xl border border-slate-100">
                <h4 className="text-[10px] uppercase tracking-widest text-slate-400 font-bold mb-2">Technical Definition</h4>
-               <p className="text-sm font-bold text-slate-800">{selectedElement.tech}</p>
+               <p className="text-sm font-bold text-slate-800">{t(`elements.${selectedElement.id}.tech`)}</p>
              </div>
           </div>
 
           <div className="text-slate-600 text-lg leading-relaxed transition-opacity duration-300">
-            {selectedElement.description}
+            {t(`elements.${selectedElement.id}.description`)}
           </div>
         </div>
       </div>
