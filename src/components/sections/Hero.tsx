@@ -8,7 +8,7 @@ export const Hero: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <header className="relative pt-20 pb-32 lg:pt-32 lg:pb-48 overflow-hidden">
+    <header className="relative pt-36 pb-32 lg:pt-48 lg:pb-48 overflow-hidden">
       {/* Background Patterns */}
       <div className="absolute inset-0 z-0 opacity-10 pointer-events-none">
          <div className="absolute top-0 right-0 transform translate-x-1/4 -translate-y-1/4">
