@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heart, FlaskConical, Network, Zap, ArrowRight } from 'lucide-react';
+import { Heart, FlaskConical, Network, Zap, ArrowRight, MousePointer2 } from 'lucide-react';
 import { DnaStrand } from './Illustrations';
 import { HexDisplay } from './HexButton';
 import { HIVE_ELEMENTS } from '../constants';
@@ -15,9 +15,10 @@ const iconMap: Record<string, React.FC<any>> = {
 
 interface DnaMappingProps {
   activeId?: ElementType;
+  onSelect?: (id: ElementType) => void;
 }
 
-export const DnaMapping: React.FC<DnaMappingProps> = ({ activeId }) => {
+export const DnaMapping: React.FC<DnaMappingProps> = ({ activeId, onSelect }) => {
   const { t } = useTranslation();
   const mappings = HIVE_ELEMENTS.map(el => {
     const Icon = iconMap[el.iconName];
@@ -56,22 +57,28 @@ export const DnaMapping: React.FC<DnaMappingProps> = ({ activeId }) => {
                 return (
                   <div 
                     key={i} 
-                    className={`flex items-center gap-4 p-4 rounded-2xl border transition-all duration-500 group
+                    onClick={() => onSelect && onSelect(m.hiveId)}
+                    className={`flex items-center gap-4 p-4 rounded-2xl border transition-all duration-500 group cursor-pointer relative overflow-hidden
                       ${isActive 
-                        ? 'bg-hive-pollen border-hive-amber shadow-md scale-105' 
-                        : 'bg-stone-50/50 border-stone-100 hover:bg-white hover:shadow-lg'
+                        ? 'bg-hive-pollen border-hive-amber shadow-md scale-105 ring-1 ring-hive-amber/50' 
+                        : 'bg-stone-50/50 border-stone-100 hover:bg-white hover:shadow-lg hover:border-stone-300'
                       }`}
                   >
+                      {/* Active Indicator */}
+                      {isActive && (
+                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-hive-amber"></div>
+                      )}
+
                       {/* DNA Side */}
                       <div className="flex-1 min-w-0">
-                          <div className={`text-xs font-bold uppercase tracking-widest mb-1 transition-colors ${isActive ? 'text-hive-amber' : 'text-slate-400'}`}>DNA Base</div>
-                          <div className="font-serif font-bold text-lg text-slate-700 mb-2">{m.dnaTitle}</div>
+                          <div className={`text-xs font-bold uppercase tracking-widest mb-1 transition-colors ${isActive ? 'text-hive-amber' : 'text-slate-400 group-hover:text-slate-600'}`}>DNA Base</div>
+                          <div className="font-serif font-bold text-lg text-slate-700 mb-2 group-hover:text-slate-900 transition-colors">{m.dnaTitle}</div>
                           <p className="text-xs text-slate-600 leading-relaxed">{m.desc}</p>
                       </div>
 
                       {/* Connection */}
                       <div className={`hidden sm:flex items-center justify-center w-8 transition-colors ${isActive ? 'text-hive-amber' : 'text-slate-300 group-hover:text-hive-amber'}`}>
-                          <ArrowRight size={20} />
+                          {isActive ? <ArrowRight size={20} /> : <MousePointer2 size={16} className="opacity-0 group-hover:opacity-100 transition-opacity" />}
                       </div>
 
                       {/* Hive Side */}

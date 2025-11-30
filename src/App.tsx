@@ -13,12 +13,18 @@ import { Hero } from './components/sections/Hero';
 import { Philosophy } from './components/sections/Philosophy';
 import { LEARNING_PATHS } from './constants';
 import { ElementType } from './types';
-import { Hexagon, BookOpen, User, Users, Sprout, ShieldCheck, Bot } from 'lucide-react';
+import { Hexagon, BookOpen, User, Users, Sprout, ShieldCheck, Bot, Globe } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { SEOHelper } from './components/SEOHelper';
 
 const Footer: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  
+  const toggleLanguage = () => {
+    const newLang = i18n.language === 'en' ? 'ru' : 'en';
+    i18n.changeLanguage(newLang);
+  };
+
   return (
     <footer className="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
       <div className="max-w-7xl mx-auto px-4 text-center">
@@ -29,6 +35,18 @@ const Footer: React.FC = () => {
            <a href="#" className="hover:text-hive-gold">GitHub</a>
            <a href="#" className="hover:text-hive-gold">Community</a>
         </div>
+        
+        {/* Explicit Language Switcher in Footer */}
+        <div className="flex justify-center mt-8">
+          <button 
+            onClick={toggleLanguage}
+            className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-slate-500 hover:text-hive-gold transition-colors"
+          >
+            <Globe size={14} />
+            {i18n.language === 'en' ? 'Switch to Russian' : 'Switch to English'}
+          </button>
+        </div>
+
         <p className="mt-8 text-xs text-slate-600">{t('footer.copyright')}</p>
       </div>
     </footer>
@@ -65,7 +83,7 @@ const App: React.FC = () => {
             
             <div className="space-y-16">
               <AtcgVisualizer activeId={activeElement} onSelect={setActiveElement} />
-              <DnaMapping activeId={activeElement} />
+              <DnaMapping activeId={activeElement} onSelect={setActiveElement} />
             </div>
           </div>
         </section>
