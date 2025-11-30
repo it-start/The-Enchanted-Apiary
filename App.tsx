@@ -2,7 +2,8 @@ import React from 'react';
 import { AtcgVisualizer } from './components/AtcgVisualizer';
 import { CodonSequencer } from './components/CodonSequencer';
 import { ChemicalBondsVisualizer } from './components/ChemicalBondsVisualizer';
-import { HoneycombPattern, LittleBee } from './components/Illustrations';
+import { DnaMapping } from './components/DnaMapping';
+import { HoneycombPattern, LittleBee, HoneyPot } from './components/Illustrations';
 import { LEARNING_PATHS } from './constants';
 import { Hexagon, BookOpen, User, Users, MoveRight, Leaf } from 'lucide-react';
 
@@ -94,6 +95,12 @@ const App: React.FC = () => {
             </div>
             <div className="bg-stone-100 p-8 rounded-2xl relative">
                <div className="absolute -top-4 -right-4 bg-hive-gold text-xs font-bold px-3 py-1 rounded shadow transform rotate-3">The Metaphor</div>
+               
+               {/* Honey Pot Visual - External Data */}
+               <div className="absolute -bottom-8 -right-8 w-24 h-24 pointer-events-none drop-shadow-xl z-10 hidden md:block">
+                  <HoneyPot />
+               </div>
+
                <div className="space-y-4 font-serif">
                   <div className="flex justify-between border-b border-stone-200 pb-2">
                     <span className="text-slate-500">Hexagonal</span>
@@ -133,7 +140,10 @@ const App: React.FC = () => {
             </div>
           </div>
           
-          <AtcgVisualizer />
+          <div className="space-y-16">
+            <AtcgVisualizer />
+            <DnaMapping />
+          </div>
         </div>
       </section>
 

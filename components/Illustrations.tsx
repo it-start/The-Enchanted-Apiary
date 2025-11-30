@@ -77,3 +77,98 @@ export const LittleBee: React.FC<{ className?: string }> = ({ className = "" }) 
     </g>
   </svg>
 );
+
+export const HoneyPot: React.FC<{ className?: string }> = ({ className = "" }) => (
+  <svg 
+    viewBox="0 0 100 100" 
+    className={className}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <defs>
+      <linearGradient id="potGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stopColor="#78350F" />
+        <stop offset="50%" stopColor="#92400E" />
+        <stop offset="100%" stopColor="#78350F" />
+      </linearGradient>
+      <linearGradient id="honeyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stopColor="#FCD34D" />
+        <stop offset="100%" stopColor="#F59E0B" />
+      </linearGradient>
+       <filter id="dripGlow" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="1" result="blur" />
+        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+      </filter>
+    </defs>
+
+    {/* Pot Body */}
+    <path d="M20 35 C 20 20, 80 20, 80 35 L 85 70 C 90 95, 10 95, 15 70 Z" fill="url(#potGradient)" />
+    
+    {/* Pot Rim */}
+    <ellipse cx="50" cy="35" rx="30" ry="8" fill="#5D2809" />
+    
+    {/* Honey Inside */}
+    <ellipse cx="50" cy="36" rx="26" ry="6" fill="#FBBF24" />
+
+    {/* Honey Drip */}
+    <path d="M70 38 Q 75 45 72 55 Q 70 65 72 75 Q 75 80 70 80 Q 65 75 68 65 Q 70 55 65 45" fill="url(#honeyGradient)" filter="url(#dripGlow)" />
+    
+    {/* Shine */}
+    <ellipse cx="35" cy="50" rx="5" ry="10" fill="white" opacity="0.1" transform="rotate(-15 35 50)" />
+  </svg>
+);
+
+export const DnaStrand: React.FC<{ className?: string }> = ({ className = "" }) => (
+  <svg 
+    viewBox="0 0 100 200" 
+    className={className}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <defs>
+      <linearGradient id="dnaStrand1" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stopColor="#3B82F6" />
+        <stop offset="100%" stopColor="#8B5CF6" />
+      </linearGradient>
+      <linearGradient id="dnaStrand2" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stopColor="#EF4444" />
+        <stop offset="100%" stopColor="#F59E0B" />
+      </linearGradient>
+    </defs>
+
+    {/* Rungs */}
+    <g strokeWidth="2" strokeLinecap="round" opacity="0.6">
+        <line x1="30" y1="20" x2="70" y2="20" stroke="#CBD5E1" />
+        <line x1="30" y1="40" x2="70" y2="40" stroke="#CBD5E1" />
+        <line x1="30" y1="60" x2="70" y2="60" stroke="#CBD5E1" />
+        <line x1="30" y1="80" x2="70" y2="80" stroke="#CBD5E1" />
+        <line x1="30" y1="100" x2="70" y2="100" stroke="#CBD5E1" />
+        <line x1="30" y1="120" x2="70" y2="120" stroke="#CBD5E1" />
+        <line x1="30" y1="140" x2="70" y2="140" stroke="#CBD5E1" />
+        <line x1="30" y1="160" x2="70" y2="160" stroke="#CBD5E1" />
+        <line x1="30" y1="180" x2="70" y2="180" stroke="#CBD5E1" />
+    </g>
+
+    {/* Strand 1 (Sine Wave) */}
+    <path 
+      d="M30 0 Q 70 25 30 50 T 30 100 T 30 150 T 30 200" 
+      fill="none" 
+      stroke="url(#dnaStrand1)" 
+      strokeWidth="4" 
+    />
+    
+    {/* Strand 2 (Cosine Wave essentially) */}
+    <path 
+      d="M70 0 Q 30 25 70 50 T 70 100 T 70 150 T 70 200" 
+      fill="none" 
+      stroke="url(#dnaStrand2)" 
+      strokeWidth="4" 
+    />
+
+    {/* Nodes */}
+    <circle cx="30" cy="50" r="3" fill="#3B82F6" />
+    <circle cx="70" cy="50" r="3" fill="#EF4444" />
+    <circle cx="30" cy="100" r="3" fill="#8B5CF6" />
+    <circle cx="70" cy="100" r="3" fill="#F59E0B" />
+    <circle cx="30" cy="150" r="3" fill="#3B82F6" />
+    <circle cx="70" cy="150" r="3" fill="#EF4444" />
+  </svg>
+);
