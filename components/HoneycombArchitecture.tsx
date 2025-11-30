@@ -1,9 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ARCH_LAYERS } from '../constants';
+import { ElementType } from '../types';
 import { Shield, Crown, Globe, ArrowDownUp } from 'lucide-react';
 
-export const HoneycombArchitecture: React.FC = () => {
+interface HoneycombArchitectureProps {
+  activeElement?: ElementType;
+}
+
+export const HoneycombArchitecture: React.FC<HoneycombArchitectureProps> = ({ activeElement }) => {
   const [activeLayer, setActiveLayer] = useState<string | null>(null);
+
+  // Sync internal layer state with external element state
+  useEffect(() => {
+    if (!activeElement) return;
+    
+    // Map ATCG Elements to Architectural Layers
+    if (activeElement === ElementType.CONNECTOR) {
+      setActiveLayer('adapters');
+    } else if (activeElement === ElementType.AGGREGATE || activeElement === ElementType.TRANSFORMATION || activeElement === ElementType.GENESIS) {
+      setActiveLayer('domain');
+    } else {
+      setActiveLayer(null);
+    }
+  }, [activeElement]);
 
   return (
     <div className="flex flex-col lg:flex-row items-center gap-12 py-12">

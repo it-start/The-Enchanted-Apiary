@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, ShieldAlert, GitPullRequest, Activity, Terminal, CheckCircle } from 'lucide-react';
-import { APP_METADATA } from '../constants';
+import { Shield, ShieldAlert, GitPullRequest, Activity, Terminal, CheckCircle, Wifi, WifiOff } from 'lucide-react';
+import { APP_METADATA, MOCK_ISSUES } from '../constants';
 import { GitHubIssue, ImmuneLog, ElementType } from '../types';
 
 export const ImmuneSystemVisualizer: React.FC = () => {
@@ -8,6 +8,7 @@ export const ImmuneSystemVisualizer: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [healing, setHealing] = useState(false);
   const [logs, setLogs] = useState<ImmuneLog[]>([]);
+  const [isSimulation, setIsSimulation] = useState(false);
 
   useEffect(() => {
     fetchIssues();
@@ -15,15 +16,28 @@ export const ImmuneSystemVisualizer: React.FC = () => {
 
   const fetchIssues = async () => {
     try {
+      // Try to fetch from real repo
       const response = await fetch(`${APP_METADATA.repoApiUrl}/issues?state=open`);
+      
       if (response.ok) {
         const data = await response.json();
-        // Filter out Pull Requests, keep only issues
         const bugIssues = data.filter((item: any) => !item.pull_request);
-        setIssues(bugIssues);
+        
+        if (bugIssues.length > 0) {
+          setIssues(bugIssues);
+          setIsSimulation(false);
+        } else {
+          // Repo exists but has no bugs, or we are rate limited, fall back for demo purposes
+          setIssues(MOCK_ISSUES);
+          setIsSimulation(true);
+        }
+      } else {
+        throw new Error("Repository unreachable or rate limited");
       }
     } catch (error) {
-      console.error("Failed to fetch hive status:", error);
+      console.warn("Falling back to simulation mode:", error);
+      setIssues(MOCK_ISSUES);
+      setIsSimulation(true);
     } finally {
       setLoading(false);
     }
@@ -67,7 +81,6 @@ export const ImmuneSystemVisualizer: React.FC = () => {
   };
 
   const healthStatus = issues.length === 0 ? 'Optimal' : 'Compromised';
-  const statusColor = issues.length === 0 ? 'bg-emerald-500' : 'bg-red-500';
 
   return (
     <div className="bg-slate-900 rounded-3xl shadow-xl border border-slate-800 p-8 text-white relative overflow-hidden">
@@ -83,7 +96,14 @@ export const ImmuneSystemVisualizer: React.FC = () => {
               <h3 className="text-3xl font-serif font-bold text-white mb-2 flex items-center gap-3">
                 <Shield className="text-blue-400" /> Hive Immune System
               </h3>
-              <p className="text-slate-400 text-sm">Monitoring Repository Health: {APP_METADATA.repoApiUrl.split('/').slice(-2).join('/')}</p>
+              <div className="flex items-center gap-2 text-sm">
+                 {isSimulation ? <WifiOff size={14} className="text-amber-500"/> : <Wifi size={14} className="text-emerald-500"/>}
+                 <span className={isSimulation ? "text-amber-500" : "text-emerald-500"}>
+                   {isSimulation ? "Simulation Mode Active" : "Connected to Live Uplink"}
+                 </span>
+                 <span className="text-slate-600">|</span>
+                 <span className="text-slate-400 text-sm font-mono">{APP_METADATA.repoApiUrl.split('/').slice(-2).join('/')}</span>
+              </div>
             </div>
             <div className={`px-4 py-2 rounded-full flex items-center gap-2 ${issues.length === 0 ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/50' : 'bg-red-500/20 text-red-300 border border-red-500/50'}`}>
               <Activity size={18} className={healing ? 'animate-spin' : ''} />
@@ -113,6 +133,13 @@ export const ImmuneSystemVisualizer: React.FC = () => {
                       <div>
                         <div className="font-mono text-xs text-red-400 mb-1">#{issue.number}</div>
                         <div className="font-medium text-slate-200">{issue.title}</div>
+                        <div className="flex gap-2 mt-2">
+                          {issue.labels.map(label => (
+                            <span key={label.name} className="text-[10px] px-1.5 py-0.5 rounded bg-slate-700 text-slate-300 border border-slate-600">
+                              {label.name}
+                            </span>
+                          ))}
+                        </div>
                       </div>
                     </div>
                     <button 

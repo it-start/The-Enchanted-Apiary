@@ -1,4 +1,4 @@
-import { CodonPattern, ElementType, HiveElement, LearningPath, LifecycleStage, ArchLayer } from "./types";
+import { CodonPattern, ElementType, HiveElement, LearningPath, LifecycleStage, ArchLayer, GitHubIssue } from "./types";
 
 export const APP_METADATA = {
   title: "The Enchanted Apiary",
@@ -202,5 +202,35 @@ export const ARCH_LAYERS: ArchLayer[] = [
     analogy: "Pure Honey (Value)",
     components: ["Aggregates", "Business Policies", "Domain Services", "Value Objects"],
     color: "bg-yellow-300 text-yellow-900"
+  }
+];
+
+export const MOCK_ISSUES: GitHubIssue[] = [
+  {
+    id: 101,
+    number: 101,
+    title: "Mutation: High Latency in Honey Production",
+    state: "open",
+    html_url: "#",
+    labels: [{ name: "bug", color: "d73a4a" }, { name: "performance", color: "f9d0c4" }],
+    created_at: new Date().toISOString()
+  },
+  {
+    id: 102,
+    number: 102,
+    title: "Mutation: Drone Connector Timeout",
+    state: "open",
+    html_url: "#",
+    labels: [{ name: "critical", color: "b60205" }],
+    created_at: new Date(Date.now() - 86400000).toISOString()
+  },
+  {
+    id: 103,
+    number: 103,
+    title: "Mutation: Queen Bee State Inconsistency",
+    state: "open",
+    html_url: "#",
+    labels: [{ name: "bug", color: "d73a4a" }],
+    created_at: new Date(Date.now() - 172800000).toISOString()
   }
 ];

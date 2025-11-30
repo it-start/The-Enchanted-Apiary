@@ -111,7 +111,7 @@ const App: React.FC = () => {
           </div>
           
           <div className="grid grid-cols-1 gap-16">
-             <HoneycombArchitecture />
+             <HoneycombArchitecture activeElement={activeElement} />
              <LifecycleVisualizer />
           </div>
         </div>
