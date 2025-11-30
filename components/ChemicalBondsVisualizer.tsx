@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Heart, FlaskConical, Network, Zap } from 'lucide-react';
 import { HIVE_ELEMENTS } from '../constants';
 import { ElementType } from '../types';
@@ -161,11 +161,16 @@ const ChemicalBond: React.FC<BondProps> = ({ start, end, type, active }) => {
   );
 };
 
-export const ChemicalBondsVisualizer: React.FC = () => {
-  const [activeAtom, setActiveAtom] = useState<string>('C');
+interface ChemicalBondsVisualizerProps {
+  activeId?: ElementType;
+  onSelect?: (id: ElementType) => void;
+}
 
+export const ChemicalBondsVisualizer: React.FC<ChemicalBondsVisualizerProps> = ({
+  activeId = ElementType.AGGREGATE,
+  onSelect
+}) => {
   // Defined positions for a stable layout
-  // Keys map to ElementType: A (Carbon/Aggregate), T (Hydrogen/Transformation), C (Oxygen/Connector), G (Nitrogen/Genesis)
   const positions: Record<string, { x: number; y: number }> = {
     [ElementType.AGGREGATE]: { x: 50, y: 50 },
     [ElementType.TRANSFORMATION]: { x: 50, y: 15 },
@@ -176,15 +181,14 @@ export const ChemicalBondsVisualizer: React.FC = () => {
   const atoms = HIVE_ELEMENTS.map(el => {
     const Icon = iconMap[el.iconName];
     
-    // Determine bond type based on element type for visualization connections to Center (Aggregate)
     let bondType: 'single' | 'double' | 'ionic' | undefined;
     if (el.id === ElementType.TRANSFORMATION) bondType = 'single';
     else if (el.id === ElementType.CONNECTOR) bondType = 'double';
     else if (el.id === ElementType.GENESIS) bondType = 'ionic';
 
     return {
-      id: el.id, // e.g., 'A', 'T', 'C', 'G'
-      symbol: el.symbol, // 'C', 'H', 'O', 'N'
+      id: el.id,
+      symbol: el.symbol,
       name: el.name,
       role: el.chemistryRole,
       chemistry: el.chemistry,
@@ -196,10 +200,10 @@ export const ChemicalBondsVisualizer: React.FC = () => {
     };
   });
 
-  const activeData = atoms.find(a => a.symbol === activeAtom) || atoms[0];
+  const activeData = atoms.find(a => a.id === activeId) || atoms[0];
 
   return (
-    <div className="flex flex-col xl:flex-row items-center gap-12 p-8 lg:p-12 bg-white/50 backdrop-blur-sm rounded-3xl border border-white shadow-xl ring-1 ring-slate-900/5">
+    <div className="flex flex-col xl:flex-row items-center gap-12 p-8 lg:p-12 bg-white/50 backdrop-blur-sm rounded-3xl border border-white shadow-xl ring-1 ring-slate-900/5 transition-all duration-500">
       
       {/* Molecule Visualization Stage */}
       <div className="relative w-full max-w-[500px] aspect-square flex-shrink-0">
@@ -212,21 +216,21 @@ export const ChemicalBondsVisualizer: React.FC = () => {
              start={positions[ElementType.AGGREGATE]} 
              end={positions[ElementType.TRANSFORMATION]} 
              type="single"
-             active={activeAtom === 'C' || activeAtom === 'H'} 
+             active={activeId === ElementType.AGGREGATE || activeId === ElementType.TRANSFORMATION} 
            />
            {/* O Bond (Double) - Aggregate to Connector */}
            <ChemicalBond 
              start={positions[ElementType.AGGREGATE]} 
              end={positions[ElementType.CONNECTOR]} 
              type="double"
-             active={activeAtom === 'C' || activeAtom === 'O'} 
+             active={activeId === ElementType.AGGREGATE || activeId === ElementType.CONNECTOR} 
            />
            {/* N Bond (Ionic) - Aggregate to Genesis */}
            <ChemicalBond 
              start={positions[ElementType.AGGREGATE]} 
              end={positions[ElementType.GENESIS]} 
              type="ionic"
-             active={activeAtom === 'C' || activeAtom === 'N'} 
+             active={activeId === ElementType.AGGREGATE || activeId === ElementType.GENESIS} 
            />
         </svg>
 
@@ -239,14 +243,14 @@ export const ChemicalBondsVisualizer: React.FC = () => {
             color={atom.color}
             icon={atom.icon}
             position={atom.position}
-            isActive={activeAtom === atom.symbol}
-            onClick={() => setActiveAtom(atom.symbol)}
+            isActive={activeId === atom.id}
+            onClick={() => onSelect && onSelect(atom.id)}
           />
         ))}
       </div>
 
       {/* Interactive Description Panel */}
-      <div className="flex-1 w-full space-y-8">
+      <div className="flex-1 w-full space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500" key={activeId}>
         <div className="space-y-2">
           <div className="flex items-center gap-3">
              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-white text-2xl font-bold shadow-lg ${activeData.color}`}>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ElementType } from '../types';
 import { HIVE_ELEMENTS } from '../constants';
 import { HexButton } from './HexButton';
@@ -11,14 +11,49 @@ const iconMap: Record<string, React.FC<any>> = {
   Zap
 };
 
-export const AtcgVisualizer: React.FC = () => {
-  const [selectedId, setSelectedId] = useState<ElementType>(ElementType.AGGREGATE);
-  const selectedElement = HIVE_ELEMENTS.find(e => e.id === selectedId) || HIVE_ELEMENTS[0];
+interface AtcgVisualizerProps {
+  activeId?: ElementType;
+  onSelect?: (id: ElementType) => void;
+}
+
+export const AtcgVisualizer: React.FC<AtcgVisualizerProps> = ({ 
+  activeId = ElementType.AGGREGATE, 
+  onSelect 
+}) => {
+  const selectedElement = HIVE_ELEMENTS.find(e => e.id === activeId) || HIVE_ELEMENTS[0];
   const Icon = iconMap[selectedElement.iconName];
 
+  // Helper to render a specific element button
+  const RenderButton = ({ type, className }: { type: ElementType, className?: string }) => {
+    const el = HIVE_ELEMENTS.find(e => e.id === type);
+    if (!el) return null;
+    
+    // Extract bg color for the button base (e.g., "bg-red-100")
+    const bgClass = el.color.split(' ').find(c => c.startsWith('bg-')) || 'bg-slate-100';
+    const textClass = el.color.split(' ').find(c => c.startsWith('text-')) || 'text-slate-900';
+    // Extract shadow color based on base color for hover effect
+    const shadowColor = bgClass.replace('100', '500').replace('bg-', ''); // simple heuristic
+
+    return (
+      <div className={className}>
+        <HexButton 
+          active={activeId === type}
+          onClick={() => onSelect && onSelect(type)}
+          colorClass={bgClass}
+          className={`hover:drop-shadow-[0_10px_15px_rgba(0,0,0,0.2)]`}
+        >
+          <div className={`flex flex-col items-center ${textClass}`}>
+            <span className="text-3xl font-serif">{el.id}</span>
+            <span className="text-[10px] font-bold tracking-widest uppercase truncate max-w-[80px]">{el.tech.split(' ')[0]}</span>
+          </div>
+        </HexButton>
+      </div>
+    );
+  };
+
   return (
-    <div className="flex flex-col xl:flex-row items-center justify-center gap-16 py-12 px-4">
-      {/* Interactive Hive - Using a fixed size container to ensure SVG alignment */}
+    <div className="flex flex-col xl:flex-row items-center justify-center gap-16 py-12 px-4 transition-all duration-500">
+      {/* Interactive Hive */}
       <div className="relative w-[340px] h-[340px] flex-shrink-0 select-none">
         
         {/* Connection Lines (Behind Buttons) */}
@@ -29,76 +64,26 @@ export const AtcgVisualizer: React.FC = () => {
               <stop offset="100%" stopColor="#94A3B8" />
             </linearGradient>
           </defs>
-          {/* Connecting lines drawn specifically for these coordinates */}
-          {/* Center (Aggregate) to others */}
           <line x1="170" y1="170" x2="170" y2="40" stroke="url(#lineGrad)" strokeWidth="2" strokeDasharray="4 4" />
           <line x1="170" y1="170" x2="170" y2="300" stroke="url(#lineGrad)" strokeWidth="2" strokeDasharray="4 4" />
           <line x1="170" y1="170" x2="290" y2="170" stroke="url(#lineGrad)" strokeWidth="2" strokeDasharray="4 4" />
         </svg>
 
         {/* Buttons positioned absolutely */}
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2">
-           <HexButton 
-            active={selectedId === ElementType.TRANSFORMATION}
-            onClick={() => setSelectedId(ElementType.TRANSFORMATION)}
-            colorClass="bg-blue-100"
-            className="hover:drop-shadow-[0_10px_15px_rgba(59,130,246,0.3)]"
-           >
-             <div className="flex flex-col items-center text-blue-900">
-                <span className="text-3xl font-serif">T</span>
-                <span className="text-[10px] font-bold tracking-widest uppercase">Enzyme</span>
-             </div>
-           </HexButton>
-        </div>
-        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2">
-           <HexButton 
-            active={selectedId === ElementType.GENESIS}
-            onClick={() => setSelectedId(ElementType.GENESIS)}
-            colorClass="bg-purple-100"
-            className="hover:drop-shadow-[0_10px_15px_rgba(147,51,234,0.3)]"
-           >
-             <div className="flex flex-col items-center text-purple-900">
-                <span className="text-3xl font-serif">G</span>
-                <span className="text-[10px] font-bold tracking-widest uppercase">Event</span>
-             </div>
-           </HexButton>
-        </div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
-           <HexButton 
-            active={selectedId === ElementType.AGGREGATE}
-            onClick={() => setSelectedId(ElementType.AGGREGATE)}
-            colorClass="bg-red-100"
-            className="hover:drop-shadow-[0_10px_15px_rgba(239,68,68,0.3)]"
-           >
-             <div className="flex flex-col items-center text-red-900">
-                <span className="text-3xl font-serif">A</span>
-                <span className="text-[10px] font-bold tracking-widest uppercase">Organ</span>
-             </div>
-           </HexButton>
-        </div>
-        <div className="absolute top-1/2 right-0 transform translate-x-4 -translate-y-1/2">
-           <HexButton 
-            active={selectedId === ElementType.CONNECTOR}
-            onClick={() => setSelectedId(ElementType.CONNECTOR)}
-            colorClass="bg-amber-100"
-            className="hover:drop-shadow-[0_10px_15px_rgba(245,158,11,0.3)]"
-           >
-             <div className="flex flex-col items-center text-amber-900">
-                <span className="text-3xl font-serif">C</span>
-                <span className="text-[10px] font-bold tracking-widest uppercase">Bridge</span>
-             </div>
-           </HexButton>
-        </div>
+        <RenderButton type={ElementType.TRANSFORMATION} className="absolute top-0 left-1/2 transform -translate-x-1/2" />
+        <RenderButton type={ElementType.GENESIS} className="absolute bottom-0 left-1/2 transform -translate-x-1/2" />
+        <RenderButton type={ElementType.AGGREGATE} className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10" />
+        <RenderButton type={ElementType.CONNECTOR} className="absolute top-1/2 right-0 transform translate-x-4 -translate-y-1/2" />
       </div>
 
       {/* Info Card */}
-      <div className="flex-1 max-w-lg w-full bg-white/80 backdrop-blur p-8 rounded-2xl shadow-xl border-l-8 border-hive-gold transition-all duration-300 ring-1 ring-slate-900/5">
+      <div className="flex-1 max-w-lg w-full bg-white/80 backdrop-blur p-8 rounded-2xl shadow-xl border-l-8 border-hive-gold transition-all duration-500 ring-1 ring-slate-900/5 animate-in fade-in slide-in-from-right-4">
         <div className="flex items-center gap-5 mb-8">
-          <div className={`p-4 rounded-2xl shadow-inner ${selectedElement.color}`}>
+          <div className={`p-4 rounded-2xl shadow-inner transition-colors duration-500 ${selectedElement.color}`}>
             <Icon size={36} />
           </div>
           <div>
-            <h3 className="text-4xl serif font-bold text-slate-900">{selectedElement.name}</h3>
+            <h3 className="text-4xl serif font-bold text-slate-900 transition-all duration-300">{selectedElement.name}</h3>
             <div className="flex items-center gap-2 text-sm mt-1 font-mono text-slate-500 uppercase tracking-wide">
                <span className="bg-slate-100 px-2 py-0.5 rounded">ID: {selectedElement.id}</span>
                <span className="text-slate-300">•</span>
@@ -119,7 +104,7 @@ export const AtcgVisualizer: React.FC = () => {
              </div>
           </div>
 
-          <div className="text-slate-600 text-lg leading-relaxed">
+          <div className="text-slate-600 text-lg leading-relaxed transition-opacity duration-300">
             {selectedElement.description}
           </div>
         </div>

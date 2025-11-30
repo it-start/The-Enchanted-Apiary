@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AtcgVisualizer } from './components/AtcgVisualizer';
 import { CodonSequencer } from './components/CodonSequencer';
 import { ChemicalBondsVisualizer } from './components/ChemicalBondsVisualizer';
@@ -9,6 +9,7 @@ import { ImmuneSystemVisualizer } from './components/ImmuneSystemVisualizer';
 import { Hero } from './components/sections/Hero';
 import { Philosophy } from './components/sections/Philosophy';
 import { LEARNING_PATHS, APP_METADATA } from './constants';
+import { ElementType } from './types';
 import { Hexagon, BookOpen, User, Users, Sprout, ShieldCheck } from 'lucide-react';
 
 const Navbar: React.FC = () => (
@@ -49,6 +50,9 @@ const Footer: React.FC = () => (
 );
 
 const App: React.FC = () => {
+  // Global state for synchronized visualization
+  const [activeElement, setActiveElement] = useState<ElementType>(ElementType.AGGREGATE);
+
   return (
     <div className="min-h-screen bg-stone-50 overflow-x-hidden">
       
@@ -73,8 +77,8 @@ const App: React.FC = () => {
           </div>
           
           <div className="space-y-16">
-            <AtcgVisualizer />
-            <DnaMapping />
+            <AtcgVisualizer activeId={activeElement} onSelect={setActiveElement} />
+            <DnaMapping activeId={activeElement} />
           </div>
         </div>
       </section>
@@ -89,7 +93,7 @@ const App: React.FC = () => {
                Just as Carbon, Hydrogen, Oxygen, and Nitrogen combine to form the molecules of life, our software primitives combine to form the molecules of logic.
              </p>
           </div>
-          <ChemicalBondsVisualizer />
+          <ChemicalBondsVisualizer activeId={activeElement} onSelect={setActiveElement} />
         </div>
       </section>
 
@@ -138,7 +142,7 @@ const App: React.FC = () => {
               <h2 className="text-4xl serif font-bold text-hive-gold mb-4">The Sacred Sequences</h2>
               <p className="text-slate-400">Watch the flow of information as "Sacred Codons" execute logic.</p>
            </div>
-           <CodonSequencer />
+           <CodonSequencer onActiveElementChange={setActiveElement} />
         </div>
       </section>
 

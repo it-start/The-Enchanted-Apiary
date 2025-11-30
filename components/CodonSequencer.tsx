@@ -2,8 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { SACRED_CODONS, HIVE_ELEMENTS } from '../constants';
 import { HexDisplay } from './HexButton';
 import { ArrowRight, Play, RefreshCw, Terminal, Activity } from 'lucide-react';
+import { ElementType } from '../types';
 
-export const CodonSequencer: React.FC = () => {
+interface CodonSequencerProps {
+  onActiveElementChange?: (element: ElementType) => void;
+}
+
+export const CodonSequencer: React.FC<CodonSequencerProps> = ({ onActiveElementChange }) => {
   const [activePatternIdx, setActivePatternIdx] = useState(0);
   const [step, setStep] = useState(-1);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -29,6 +34,11 @@ export const CodonSequencer: React.FC = () => {
       const currentElType = pattern.sequence[step];
       const elDetails = HIVE_ELEMENTS.find(e => e.id === currentElType);
       
+      // Update global active state if callback provided
+      if (onActiveElementChange) {
+        onActiveElementChange(currentElType);
+      }
+      
       // Simulate "processing" log
       setTimeout(() => {
          setLogs(prev => [...prev, `> ACCESSING [${currentElType}] ${elDetails?.name.toUpperCase()}...`, `  -> ${elDetails?.tech}`]);
@@ -42,7 +52,7 @@ export const CodonSequencer: React.FC = () => {
       setLogs(prev => [...prev, `> SEQUENCE COMPLETE.`, `> RESULT: SUCCESS`]);
       setIsPlaying(false);
     }
-  }, [step, isPlaying, pattern]);
+  }, [step, isPlaying, pattern, onActiveElementChange]);
 
   return (
     <div className="bg-slate-900 rounded-3xl overflow-hidden shadow-2xl border border-slate-800 flex flex-col xl:flex-row">

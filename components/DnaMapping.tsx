@@ -3,6 +3,7 @@ import { Heart, FlaskConical, Network, Zap, ArrowRight } from 'lucide-react';
 import { DnaStrand } from './Illustrations';
 import { HexDisplay } from './HexButton';
 import { HIVE_ELEMENTS } from '../constants';
+import { ElementType } from '../types';
 
 const iconMap: Record<string, React.FC<any>> = {
   Heart,
@@ -11,7 +12,11 @@ const iconMap: Record<string, React.FC<any>> = {
   Zap
 };
 
-export const DnaMapping: React.FC = () => {
+interface DnaMappingProps {
+  activeId?: ElementType;
+}
+
+export const DnaMapping: React.FC<DnaMappingProps> = ({ activeId }) => {
   const mappings = HIVE_ELEMENTS.map(el => {
     const Icon = iconMap[el.iconName];
     return {
@@ -25,7 +30,7 @@ export const DnaMapping: React.FC = () => {
   });
 
   return (
-    <div className="bg-white rounded-3xl shadow-xl border border-stone-200 p-8 lg:p-12 relative overflow-hidden">
+    <div className="bg-white rounded-3xl shadow-xl border border-stone-200 p-8 lg:p-12 relative overflow-hidden transition-all duration-500">
       {/* Background decoration */}
       <div className="absolute top-0 right-0 p-64 bg-slate-50 rounded-full blur-3xl -z-10 opacity-50"></div>
       
@@ -44,31 +49,41 @@ export const DnaMapping: React.FC = () => {
 
         {/* Mapping Grid */}
         <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-            {mappings.map((m, i) => (
-                <div key={i} className="flex items-center gap-4 p-4 rounded-2xl border border-stone-100 bg-stone-50/50 hover:bg-white hover:shadow-lg transition-all duration-300 group">
-                    {/* DNA Side */}
-                    <div className="flex-1 min-w-0">
-                        <div className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">DNA Base</div>
-                        <div className="font-serif font-bold text-lg text-slate-700 mb-2">{m.dnaTitle}</div>
-                        <p className="text-xs text-slate-600 leading-relaxed">{m.desc}</p>
-                    </div>
+            {mappings.map((m, i) => {
+                const isActive = activeId === m.hiveId;
+                return (
+                  <div 
+                    key={i} 
+                    className={`flex items-center gap-4 p-4 rounded-2xl border transition-all duration-500 group
+                      ${isActive 
+                        ? 'bg-hive-pollen border-hive-amber shadow-md scale-105' 
+                        : 'bg-stone-50/50 border-stone-100 hover:bg-white hover:shadow-lg'
+                      }`}
+                  >
+                      {/* DNA Side */}
+                      <div className="flex-1 min-w-0">
+                          <div className={`text-xs font-bold uppercase tracking-widest mb-1 transition-colors ${isActive ? 'text-hive-amber' : 'text-slate-400'}`}>DNA Base</div>
+                          <div className="font-serif font-bold text-lg text-slate-700 mb-2">{m.dnaTitle}</div>
+                          <p className="text-xs text-slate-600 leading-relaxed">{m.desc}</p>
+                      </div>
 
-                    {/* Connection */}
-                    <div className="hidden sm:flex items-center justify-center w-8 text-slate-300 group-hover:text-hive-amber transition-colors">
-                        <ArrowRight size={20} />
-                    </div>
+                      {/* Connection */}
+                      <div className={`hidden sm:flex items-center justify-center w-8 transition-colors ${isActive ? 'text-hive-amber' : 'text-slate-300 group-hover:text-hive-amber'}`}>
+                          <ArrowRight size={20} />
+                      </div>
 
-                    {/* Hive Side */}
-                    <div className="flex-shrink-0 transform group-hover:scale-105 transition-transform duration-300">
-                        <HexDisplay 
-                            label={m.hiveId} 
-                            subLabel={m.hiveName} 
-                            icon={m.icon} 
-                            color={m.color} 
-                        />
-                    </div>
-                </div>
-            ))}
+                      {/* Hive Side */}
+                      <div className="flex-shrink-0 transform group-hover:scale-105 transition-transform duration-300">
+                          <HexDisplay 
+                              label={m.hiveId} 
+                              subLabel={m.hiveName} 
+                              icon={m.icon} 
+                              color={m.color} 
+                          />
+                      </div>
+                  </div>
+                );
+            })}
         </div>
 
       </div>
