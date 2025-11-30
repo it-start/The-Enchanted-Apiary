@@ -1,6 +1,7 @@
 import React from 'react';
 import { AtcgVisualizer } from './components/AtcgVisualizer';
 import { CodonSequencer } from './components/CodonSequencer';
+import { HoneycombPattern, LittleBee } from './components/Illustrations';
 import { LEARNING_PATHS } from './constants';
 import { Hexagon, BookOpen, User, Users, MoveRight, Leaf } from 'lucide-react';
 
@@ -31,10 +32,19 @@ const App: React.FC = () => {
 
       {/* Hero Section */}
       <header className="relative pt-20 pb-32 lg:pt-32 lg:pb-48 overflow-hidden">
+        {/* Background Patterns */}
         <div className="absolute inset-0 z-0 opacity-10 pointer-events-none">
-           <div className="absolute top-10 right-10 transform rotate-12"><Hexagon size={200} /></div>
-           <div className="absolute bottom-10 left-10 transform -rotate-12"><Hexagon size={150} /></div>
-           <div className="absolute top-1/2 left-1/4 transform rotate-45"><Hexagon size={80} /></div>
+           <div className="absolute top-0 right-0 transform translate-x-1/4 -translate-y-1/4">
+             <HoneycombPattern className="w-[600px] h-[600px] text-hive-amber" />
+           </div>
+           <div className="absolute bottom-0 left-0 transform -translate-x-1/4 translate-y-1/4 rotate-90">
+             <HoneycombPattern className="w-[500px] h-[500px] text-hive-gold" />
+           </div>
+        </div>
+
+        {/* Floating Little Bee */}
+        <div className="absolute top-32 right-[15%] hidden lg:block pointer-events-none animate-float z-20">
+          <LittleBee className="w-32 h-32" />
         </div>
         
         <div className="max-w-7xl mx-auto px-4 text-center relative z-10">
