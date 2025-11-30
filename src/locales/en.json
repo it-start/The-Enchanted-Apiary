@@ -1,0 +1,177 @@
+{
+  "meta": {
+    "title": "The Enchanted Apiary",
+    "subtitle": "The Hive Architecture",
+    "tagline": "Nature-Inspired Software Design",
+    "quote": "\"Just as chemistry's periodic table unlocked modern science, the Hive's table will unlock scalable, predictable software architecture.\""
+  },
+  "nav": {
+    "philosophy": "Philosophy",
+    "atcg": "The ATCG Code",
+    "chemistry": "Chemistry",
+    "patterns": "Sacred Patterns",
+    "dynamics": "Dynamics",
+    "immune": "Immune System",
+    "getSdk": "Get the SDK"
+  },
+  "hero": {
+    "titlePrefix": "The Tale of the",
+    "titleHighlight": "Enchanted Apiary",
+    "explore": "Explore the Hive",
+    "path": "Choose Your Path"
+  },
+  "philosophy": {
+    "title": "From Hexagons to Honeycombs",
+    "description": "Traditional Hexagonal Architecture is powerful but abstract. The Hive Architecture grounds it in nature, providing a rich vocabulary for complex systems.",
+    "point1": "Organic Growth over rigid planning",
+    "point2": "Scientific Foundation based on patterns",
+    "point3": "Ecosystem Scale from day one",
+    "metaphorTitle": "The Metaphor",
+    "mapping1_k": "Hexagonal",
+    "mapping1_v": "The Hive",
+    "mapping2_k": "Domain",
+    "mapping2_v": "The Queen's Chamber",
+    "mapping3_k": "Ports & Adapters",
+    "mapping3_v": "Connectors & Organs",
+    "mapping4_k": "Application Services",
+    "mapping4_v": "The Enzymes (Logic)"
+  },
+  "sections": {
+    "atcg": {
+      "eyebrow": "The Periodic Table of Software",
+      "title": "The Four Fundamental Primitives",
+      "quote": "\"Aggregate, Transformation, Connector, Genesis Event\"",
+      "desc": "These four elements—<1>A</1>ggregate, <3>T</3>ransformation, <5>C</5>onnector, and <7>G</7>enesis Event—form the <9>ATCG</9> code. Just like DNA, they combine to create complex, living software systems."
+    },
+    "chemistry": {
+      "eyebrow": "Molecular Design",
+      "title": "The Chemical Bonds of Logic",
+      "desc": "Just as Carbon, Hydrogen, Oxygen, and Nitrogen combine to form the molecules of life, our software primitives combine to form the molecules of logic."
+    },
+    "dynamics": {
+      "tag": "Living Systems",
+      "title": "System Dynamics & Evolution",
+      "desc": "A Hive is not static structure; it is a living process. Understand the protected geometry of the core and the lifecycle of every component."
+    },
+    "agent": {
+      "tag": "Hive Minds",
+      "title": "Autonomous Agents",
+      "desc": "The \"Queen Bee\" (Agent) can autonomously call tools (Worker Bees), analyze the results, and call herself again to solve complex problems."
+    },
+    "immune": {
+      "tag": "Pattern 4: G→C→A→C",
+      "title": "Self-Healing Architecture",
+      "desc": "The Hive detects mutations (bugs) and deploys antibodies (fixes) automatically. Connecting to live source: "
+    },
+    "patterns": {
+      "title": "The Sacred Sequences",
+      "desc": "Watch the flow of information as \"Sacred Codons\" execute logic."
+    },
+    "learning": {
+      "title": "Choose Your Adventure",
+      "desc": "Tailored guides for every role in the colony.",
+      "start": "Start Path"
+    }
+  },
+  "elements": {
+    "A": {
+      "name": "Aggregate",
+      "biology": "The Organs",
+      "chemistry": "Carbon",
+      "tech": "Business Logic Core",
+      "description": "The heart of the system where business rules live. Like organs in a body, they perform specific, vital functions.",
+      "detailedDescription": "The central Aggregate (Carbon) bonds with everything. It provides the structure for the logic molecule.",
+      "dnaBase": "Adenine (A)",
+      "dnaDescription": "The structural core. Like Adenine pairs in DNA, Aggregates pair with logic to form the backbone of the system."
+    },
+    "T": {
+      "name": "Transformation",
+      "biology": "The Enzymes",
+      "chemistry": "Hydrogen",
+      "tech": "Pure Functions",
+      "description": "Stateless processing units that convert data from one form to another without side effects.",
+      "detailedDescription": "Transformations (Hydrogen) must follow the Law of Purity: Deterministic output based solely on input, with zero side effects. No database writes, no API calls, just pure logic.",
+      "dnaBase": "Thymine (T)",
+      "dnaDescription": "The processing unit. Like Thymine provides stability, Transformations provide pure, reliable logic processing."
+    },
+    "C": {
+      "name": "Connector",
+      "biology": "The Senses/Limbs",
+      "chemistry": "Oxygen",
+      "tech": "Adapters & Ports",
+      "description": "Bridges to the outside world (APIs, Databases, UI). They translate external signals into internal language.",
+      "detailedDescription": "Connectors (Oxygen) form strong double bonds, bridging the internal logic to the external world securely.",
+      "dnaBase": "Cytosine (C)",
+      "dnaDescription": "The bridge. Like Cytosine bonds across the strand, Connectors bond the internal core to the external world."
+    },
+    "G": {
+      "name": "Genesis Event",
+      "biology": "Waggle Dance",
+      "chemistry": "Nitrogen",
+      "tech": "Domain Events",
+      "description": "Significant moments of change. Events that trigger reactions across the hive or store state.",
+      "detailedDescription": "Genesis Events (Nitrogen) have a directional \"ionic\" charge. They trigger reactions that flow outwards or signal change.",
+      "dnaBase": "Guanine (G)",
+      "dnaDescription": "The energy spark. Like Guanine enables energy transfer, Genesis Events trigger reactions and state changes."
+    }
+  },
+  "lifecycle": {
+    "title": "The Metamorphosis of Code",
+    "desc": "In the Hive, software is not \"built\" in a factory; it is \"grown\" organically. Every component follows the sacred biological lifecycle.",
+    "evolve": "Evolve Component",
+    "stages": {
+      "egg": {
+        "name": "The Egg",
+        "metaphor": "Genesis Init",
+        "desc": "The potential of life. A standardized project structure is laid, waiting for logic to be injected."
+      },
+      "larva": {
+        "name": "The Larva",
+        "metaphor": "Development",
+        "desc": "Rapid growth. The bare minimum code file (scaffold) is generated. It consumes requirements to grow."
+      },
+      "pupa": {
+        "name": "The Pupa",
+        "metaphor": "Testing",
+        "desc": "Metamorphosis. The code is wrapped in a protective layer of tests. It hardens and validates its structure."
+      },
+      "adult": {
+        "name": "The Adult",
+        "metaphor": "Production",
+        "desc": "Flight. The component emerges with Dockerfiles and CI/CD config, ready to leave the hive and serve."
+      }
+    }
+  },
+  "arch": {
+    "title": "The Queen's Chamber",
+    "desc": "The Hive Architecture strictly enforces the dependency rule. The Queen (Business Logic) knows nothing of the outside world. Workers (Adapters) protect her and translate all communication.",
+    "layers": {
+      "external": { "name": "The World", "analogy": "The Garden", "role": "External Systems" },
+      "adapters": { "name": "Worker Bees", "analogy": "Wax Comb", "role": "Interface Adapters" },
+      "domain": { "name": "Queen Bee", "analogy": "Pure Honey", "role": "Domain Core" }
+    }
+  },
+  "immune": {
+    "status": "Hive Immune System",
+    "connected": "Connected to Live Uplink",
+    "simulation": "Simulation Mode Active",
+    "mutations": "Detected Mutations (Open Issues)",
+    "healthy": "System Healthy",
+    "healthyDesc": "No toxic patterns detected.",
+    "deploy": "Deploy Antibodies",
+    "log": "IMMUNE_RESPONSE_LOG",
+    "idle": "System Idle. Waiting for response trigger..."
+  },
+  "agent": {
+    "title": "Hive Mind Agent",
+    "desc": "An autonomous \"Queen Bee\" agent. It receives a goal and recursively calls tools until the goal is satisfied.",
+    "input": "Mission Objective",
+    "execute": "Execute Agent Loop",
+    "processing": "Processing...",
+    "tools": "Available Tools (Functions)"
+  },
+  "footer": {
+    "quote": "\"In the end, we are all beekeepers, tending our digital hives with patience, wisdom, and love.\"",
+    "copyright": "© 2024 The Hive Architecture Project. Open Source."
+  }
+}
