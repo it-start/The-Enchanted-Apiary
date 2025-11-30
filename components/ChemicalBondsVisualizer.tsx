@@ -181,7 +181,7 @@ export const ChemicalBondsVisualizer: React.FC = () => {
       name: 'Transformation',
       role: 'Single Bond',
       chemistry: 'Hydrogen',
-      desc: 'Transformations (Hydrogen) are Pure Functions. They transform input data into output without side effects or state modification.',
+      desc: 'Transformations (Hydrogen) must follow the Law of Purity: Deterministic output based solely on input, with zero side effects. No database writes, no API calls, just pure logic.',
       color: 'bg-gradient-to-br from-blue-500 to-blue-600 border-blue-200',
       icon: <FlaskConical size={32} />,
       position: positions.H,

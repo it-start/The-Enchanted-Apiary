@@ -280,11 +280,21 @@ class OrderAggregate(SacredAggregate):
 
 ### The Law of Purity
 
-In the Hive Architecture, the **T (Transformation)** step must adhere to the **Law of Purity**. This ensures the system remains predictable and testable.
+In the Hive Architecture, the **T (Transformation)** step must adhere to the **Law of Purity**. This ensures the system remains predictable and testable. A "Pure Function" in this context is defined by:
 
-1.  **Zero Side Effects**: A Transformation cannot write to the database, publish events, or modify global state. It exists only to compute.
-2.  **Deterministic**: Given the same inputs, it must always return the same output.
+1.  **Zero Side Effects**: A Transformation cannot write to the database, publish events, modify global state, or send emails. It exists only to compute.
+2.  **Deterministic**: Given the same inputs, it must *always* return the same output. It cannot rely on `random()`, `Date.now()` (unless passed as an argument), or external system calls.
 3.  **Isolation**: It interacts only with the data provided by the Input Connector.
+
+#### Comparison: Pure vs. Impure
+
+| Feature | ✅ Pure (Transformation) | ❌ Impure (Connector/Aggregate) |
+| :--- | :--- | :--- |
+| **State** | Stateless | Stateful |
+| **I/O** | None | Database, API, Filesystem |
+| **Time** | Passed as argument | `new Date()`, `time.now()` |
+| **Randomness** | Passed as argument | `Math.random()`, `uuid()` |
+| **Events** | Returns data | Publishes events |
 
 *> "A Transformation that changes the world is a rogue enzyme. It must be purged." - The Beekeeper*
 
