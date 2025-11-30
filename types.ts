@@ -10,12 +10,18 @@ export enum ElementType {
 export interface HiveElement {
   id: ElementType;
   name: string;
+  symbol: string;
   biology: string;
   chemistry: string;
+  chemistryRole: string;
   tech: string;
   description: string;
+  detailedDescription?: string;
   iconName: string; // Mapping string to icon in component
   color: string;
+  gradientColor?: string;
+  dnaBase: string;
+  dnaDescription: string;
 }
 
 export interface CodonPattern {

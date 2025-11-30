@@ -2,42 +2,27 @@ import React from 'react';
 import { Heart, FlaskConical, Network, Zap, ArrowRight } from 'lucide-react';
 import { DnaStrand } from './Illustrations';
 import { HexDisplay } from './HexButton';
+import { HIVE_ELEMENTS } from '../constants';
+
+const iconMap: Record<string, React.FC<any>> = {
+  Heart,
+  FlaskConical,
+  Network,
+  Zap
+};
 
 export const DnaMapping: React.FC = () => {
-  const mappings = [
-    {
-      dnaTitle: "Adenine (A)",
-      hiveId: "A",
-      hiveName: "Aggregate",
-      color: "bg-red-100",
-      icon: <Heart size={20} className="text-red-800" />,
-      desc: "The structural core. Like Adenine pairs in DNA, Aggregates pair with logic to form the backbone of the system."
-    },
-    {
-      dnaTitle: "Thymine (T)",
-      hiveId: "T",
-      hiveName: "Transformation",
-      color: "bg-blue-100",
-      icon: <FlaskConical size={20} className="text-blue-800" />,
-      desc: "The processing unit. Like Thymine provides stability, Transformations provide pure, reliable logic processing."
-    },
-    {
-      dnaTitle: "Cytosine (C)",
-      hiveId: "C",
-      hiveName: "Connector",
-      color: "bg-amber-100",
-      icon: <Network size={20} className="text-amber-800" />,
-      desc: "The bridge. Like Cytosine bonds across the strand, Connectors bond the internal core to the external world."
-    },
-    {
-      dnaTitle: "Guanine (G)",
-      hiveId: "G",
-      hiveName: "Genesis Event",
-      color: "bg-purple-100",
-      icon: <Zap size={20} className="text-purple-800" />,
-      desc: "The energy spark. Like Guanine enables energy transfer, Genesis Events trigger reactions and state changes."
-    }
-  ];
+  const mappings = HIVE_ELEMENTS.map(el => {
+    const Icon = iconMap[el.iconName];
+    return {
+      dnaTitle: el.dnaBase,
+      hiveId: el.id,
+      hiveName: el.name,
+      color: el.color.split(' ')[0], // Extract bg color class
+      icon: <Icon size={20} className={el.color.split(' ').find(c => c.startsWith('text-'))} />,
+      desc: el.dnaDescription
+    };
+  });
 
   return (
     <div className="bg-white rounded-3xl shadow-xl border border-stone-200 p-8 lg:p-12 relative overflow-hidden">

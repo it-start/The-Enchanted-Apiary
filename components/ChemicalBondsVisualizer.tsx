@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Heart, FlaskConical, Network, Zap } from 'lucide-react';
+import { HIVE_ELEMENTS } from '../constants';
+import { ElementType } from '../types';
 
 interface AtomProps {
   id: string;
@@ -10,6 +12,13 @@ interface AtomProps {
   isActive: boolean;
   onClick: () => void;
 }
+
+const iconMap: Record<string, React.FC<any>> = {
+  Heart,
+  FlaskConical,
+  Network,
+  Zap
+};
 
 const Atom: React.FC<AtomProps> = ({ 
   symbol, 
@@ -156,64 +165,38 @@ export const ChemicalBondsVisualizer: React.FC = () => {
   const [activeAtom, setActiveAtom] = useState<string>('C');
 
   // Defined positions for a stable layout
-  const positions = {
-    C: { x: 50, y: 50 },
-    H: { x: 50, y: 15 },
-    O: { x: 80, y: 75 },
-    N: { x: 20, y: 75 }
+  // Keys map to ElementType: A (Carbon/Aggregate), T (Hydrogen/Transformation), C (Oxygen/Connector), G (Nitrogen/Genesis)
+  const positions: Record<string, { x: number; y: number }> = {
+    [ElementType.AGGREGATE]: { x: 50, y: 50 },
+    [ElementType.TRANSFORMATION]: { x: 50, y: 15 },
+    [ElementType.CONNECTOR]: { x: 80, y: 75 },
+    [ElementType.GENESIS]: { x: 20, y: 75 }
   };
 
-  const atoms = [
-    {
-      id: 'C',
-      symbol: 'C',
-      name: 'Aggregate',
-      role: 'Structural Core',
-      chemistry: 'Carbon',
-      desc: 'The central Aggregate (Carbon) bonds with everything. It provides the structure for the logic molecule.',
-      color: 'bg-gradient-to-br from-red-500 to-red-600 border-red-200',
-      icon: <Heart size={32} />,
-      position: positions.C
-    },
-    {
-      id: 'H',
-      symbol: 'H',
-      name: 'Transformation',
-      role: 'Single Bond',
-      chemistry: 'Hydrogen',
-      desc: 'Transformations (Hydrogen) must follow the Law of Purity: Deterministic output based solely on input, with zero side effects. No database writes, no API calls, just pure logic.',
-      color: 'bg-gradient-to-br from-blue-500 to-blue-600 border-blue-200',
-      icon: <FlaskConical size={32} />,
-      position: positions.H,
-      bondType: 'single' as const
-    },
-    {
-      id: 'O',
-      symbol: 'O',
-      name: 'Connector',
-      role: 'Double Bond',
-      chemistry: 'Oxygen',
-      desc: 'Connectors (Oxygen) form strong double bonds, bridging the internal logic to the external world securely.',
-      color: 'bg-gradient-to-br from-amber-500 to-amber-600 border-amber-200',
-      icon: <Network size={32} />,
-      position: positions.O,
-      bondType: 'double' as const
-    },
-    {
-      id: 'N',
-      symbol: 'N',
-      name: 'Genesis Event',
-      role: 'Ionic/Directional',
-      chemistry: 'Nitrogen',
-      desc: 'Genesis Events (Nitrogen) have a directional "ionic" charge. They trigger reactions that flow outwards or signal change.',
-      color: 'bg-gradient-to-br from-purple-500 to-purple-600 border-purple-200',
-      icon: <Zap size={32} />,
-      position: positions.N,
-      bondType: 'ionic' as const
-    }
-  ];
+  const atoms = HIVE_ELEMENTS.map(el => {
+    const Icon = iconMap[el.iconName];
+    
+    // Determine bond type based on element type for visualization connections to Center (Aggregate)
+    let bondType: 'single' | 'double' | 'ionic' | undefined;
+    if (el.id === ElementType.TRANSFORMATION) bondType = 'single';
+    else if (el.id === ElementType.CONNECTOR) bondType = 'double';
+    else if (el.id === ElementType.GENESIS) bondType = 'ionic';
 
-  const activeData = atoms.find(a => a.id === activeAtom)!;
+    return {
+      id: el.id, // e.g., 'A', 'T', 'C', 'G'
+      symbol: el.symbol, // 'C', 'H', 'O', 'N'
+      name: el.name,
+      role: el.chemistryRole,
+      chemistry: el.chemistry,
+      desc: el.detailedDescription || el.description,
+      color: el.gradientColor || el.color,
+      icon: <Icon size={32} />,
+      position: positions[el.id],
+      bondType
+    };
+  });
+
+  const activeData = atoms.find(a => a.symbol === activeAtom) || atoms[0];
 
   return (
     <div className="flex flex-col xl:flex-row items-center gap-12 p-8 lg:p-12 bg-white/50 backdrop-blur-sm rounded-3xl border border-white shadow-xl ring-1 ring-slate-900/5">
@@ -224,24 +207,24 @@ export const ChemicalBondsVisualizer: React.FC = () => {
         
         {/* Bonds Layer */}
         <svg className="absolute inset-0 w-full h-full pointer-events-none z-10 overflow-visible">
-           {/* H Bond (Single) */}
+           {/* H Bond (Single) - Aggregate to Transformation */}
            <ChemicalBond 
-             start={positions.C} 
-             end={positions.H} 
+             start={positions[ElementType.AGGREGATE]} 
+             end={positions[ElementType.TRANSFORMATION]} 
              type="single"
              active={activeAtom === 'C' || activeAtom === 'H'} 
            />
-           {/* O Bond (Double) */}
+           {/* O Bond (Double) - Aggregate to Connector */}
            <ChemicalBond 
-             start={positions.C} 
-             end={positions.O} 
+             start={positions[ElementType.AGGREGATE]} 
+             end={positions[ElementType.CONNECTOR]} 
              type="double"
              active={activeAtom === 'C' || activeAtom === 'O'} 
            />
-           {/* N Bond (Ionic) */}
+           {/* N Bond (Ionic) - Aggregate to Genesis */}
            <ChemicalBond 
-             start={positions.C} 
-             end={positions.N} 
+             start={positions[ElementType.AGGREGATE]} 
+             end={positions[ElementType.GENESIS]} 
              type="ionic"
              active={activeAtom === 'C' || activeAtom === 'N'} 
            />
@@ -251,9 +234,13 @@ export const ChemicalBondsVisualizer: React.FC = () => {
         {atoms.map(atom => (
           <Atom 
             key={atom.id}
-            {...atom}
-            isActive={activeAtom === atom.id}
-            onClick={() => setActiveAtom(atom.id)}
+            id={atom.id}
+            symbol={atom.symbol}
+            color={atom.color}
+            icon={atom.icon}
+            position={atom.position}
+            isActive={activeAtom === atom.symbol}
+            onClick={() => setActiveAtom(atom.symbol)}
           />
         ))}
       </div>
