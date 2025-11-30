@@ -1,0 +1,21 @@
+{
+  "name": "The Enchanted Apiary - Hive Architecture",
+  "short_name": "Hive Arch",
+  "description": "An interactive exploration of the Hive Architecture software design pattern.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFBEB",
+  "theme_color": "#F59E0B",
+  "icons": [
+    {
+      "src": "pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
